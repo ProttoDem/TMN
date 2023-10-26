@@ -4,7 +4,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 import tensorflow as tf
 
-# Підготовка даних
 data = np.genfromtxt('data_banknote_authentication.txt', delimiter=',')
 X = data[:, :-1]
 y = data[:, -1]

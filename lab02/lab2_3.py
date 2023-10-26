@@ -4,13 +4,11 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 import tensorflow as tf
 
-# Підготовка даних
 data = np.genfromtxt('data_banknote_authentication.txt', delimiter=',')
 X = data[:, :-1]
 y = data[:, -1]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Реалізація функції втрат Binary Crossentropy
 def binary_crossentropy_loss(y_pred, y_true):
     assert y_pred.shape == y_true.shape, "Shape of y_pred and y_true doesn't match"
     epsilon = 1e-7
@@ -20,7 +18,6 @@ def binary_crossentropy_loss(y_pred, y_true):
 
     return mean_loss
 
-# Тренування моделі
 def train(X_train,y_train, X_test, y_test, epochs, loss_function):
   model = tf.keras.Sequential([
       tf.keras.layers.Input(shape=(X_train.shape[1],)),
@@ -36,7 +33,6 @@ num_epochs = 100
 
 theta, train_losses, test_losses  = train(X_train, y_train, X_test, y_test, num_epochs, binary_crossentropy_loss)
 
-# Візуалізація кривих навчання binary crossentropy
 plt.plot(train_losses, label='Train')
 
 plt.xlabel('Epochs')
@@ -53,7 +49,6 @@ plt.show()
 
 threshold = 0.5
 
-# Binary crossentropy
 y_pred =theta.predict(X_test)
 y_pred_binary = (y_pred > threshold).astype(int)
 accuracy = accuracy_score(y_test, y_pred_binary)
